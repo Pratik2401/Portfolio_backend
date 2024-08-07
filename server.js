@@ -10,7 +10,12 @@ connectDB()
 app.use(cors({ origin: 'https://pratikmali.vercel.app/admin', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
-  }))
+  },
+  { origin: 'https://pratikmali.vercel.app', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }
+))
 app.use(express.json())
 app.use("/api/messages", require("./routes/messageRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
