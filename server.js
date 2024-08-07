@@ -7,7 +7,10 @@ const errorHandler = require("./middlewares/errorHandler");
 
 
 connectDB()
-app.use(cors())
+app.use(cors({ origin: 'https://pratik2401.github.io/Portfolio/', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+  }))
 app.use(express.json())
 app.use("/api/messages", require("./routes/messageRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
