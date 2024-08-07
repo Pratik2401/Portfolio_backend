@@ -7,7 +7,7 @@ const errorHandler = require("./middlewares/errorHandler");
 
 
 connectDB()
-app.use(cors({ origin: 'https://pratikmali.vercel.app/', 
+app.use(cors({ origin: 'https://pratikmali.vercel.app/admin', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
   }))
