@@ -1,5 +1,18 @@
 const asyncHandler=require('express-async-handler')
 const messageModel=require('../models/messageModel')
+const nodemailer = require("nodemailer");
+
+const transporter = nodemailer.createTransport({
+    service: "Gmail",
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+      user: "p3597843@gmail.com",
+      pass: "lweqwpphbftsofph",
+    },
+  });
+
 
 // @desp Get All Messages
 // @route /api/messages/get
@@ -12,19 +25,33 @@ const getMessage=asyncHandler(async(req,res)=>{
 // @desp Send Message
 // @route /api/messages/send
 // access public
-const sendMessage=asyncHandler(async(req,res)=>{
-    const {name,email,message}=req.body
-    if(!name || !email || !message){
-        res.status(400)
+const sendMessage = asyncHandler(async (req, res) => {
+    const { name, email, message } = req.body;
+
+    if (!name || !email || !message) {
+        res.status(400);
         throw new Error("All Fields are mandatory");
     }
-    const Message = await messageModel.create({
+
+    const newMessage = await messageModel.create({
         name,
         email,
         message
     });
-    res.status(201).json(Message);
-})
+
+    const info = await transporter.sendMail({
+        from: 'p3597843@gmail.com',
+        to: "pratikmali242005@gmail.com",
+        subject: "New Message from Portfolio",
+        html: `
+            <h3>New Message from ${name}</h3>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Message:</strong> ${message}</p>
+        `
+    });
+    console.log("Email sent: %s", info.messageId);
+    res.status(201).json(newMessage);
+});
 
 // @desp Delete Message 
 // @route /api/messages/delete
