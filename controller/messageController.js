@@ -66,4 +66,13 @@ const deleteMessage=asyncHandler(async(req,res)=>{
     res.status(200).json({message:"Message Deleted Successfully"})
 })
 
-module.exports={getMessage,sendMessage,deleteMessage}
+
+// @desc Delete All Messages
+// @route DELETE /api/messages/delAll
+// @access Private
+const deleteAll = asyncHandler(async (req, res) => {
+    await messageModel.deleteMany({}); // Deletes all messages
+    res.status(200).json({ message: "All Messages Deleted Successfully" });
+});
+
+module.exports={getMessage,sendMessage,deleteMessage,deleteAll}
