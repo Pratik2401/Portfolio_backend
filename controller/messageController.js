@@ -75,28 +75,5 @@ const deleteAll = asyncHandler(async (req, res) => {
     res.status(200).json({ message: "All Messages Deleted Successfully" });
 });
 
-const sendchocomail=asyncHandler(async(req,res)=> {
-    const { chocolates } = req.body;
-    if (!chocolates || chocolates.length === 0) {
-        return res.status(400).json({ error: "Missing chocolates selection" });
-    }
-
-    const chocolateList = chocolates.map(choco => `🍫 ${choco.name}`).join("\n");
-
-    const mailOptions = {
-        from: process.env.EMAIL_USER,
-        to: "pm9000255@gmail.com",
-        subject: "Your Chocolate Day Surprise! 🍫❤️",
-        text: `Here are the chocolates you selected:\n\n${chocolateList}`
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            return res.status(500).json({ error: error.message });
-        }
-        res.json({ success: "Email sent!", info });
-    });
-}));
-
 
 module.exports={getMessage,sendMessage,deleteMessage,deleteAll,sendchocomail}
