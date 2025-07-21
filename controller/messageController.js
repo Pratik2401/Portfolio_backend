@@ -8,8 +8,8 @@ const transporter = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-      user: "p3597843@gmail.com",
-      pass: "lweqwpphbftsofph",
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
   });
 
@@ -40,8 +40,8 @@ const sendMessage = asyncHandler(async (req, res) => {
     });
 
     const info = await transporter.sendMail({
-        from: 'p3597843@gmail.com',
-        to: "pratikmali242005@gmail.com",
+        from: process.env.EMAIL_USER,
+        to: process.env.EMAIL_RECIPIENT,
         subject: "New Message from Portfolio",
         html: `
             <h3>New Message from ${name}</h3>
